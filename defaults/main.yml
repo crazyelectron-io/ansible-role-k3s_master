@@ -1,0 +1,26 @@
+---
+# The Kubernetes version to install (compatible with Rancher)
+k3s_version: v1.24.3+k3s1
+# The K3s daemon command line options
+server_init_args: >-
+  {% if groups['master'] | length > 1 %}
+    {% if ansible_host == hostvars[groups['master'][0]]['ansible_host'] | default(groups['master'][0]) %}
+      --cluster-init
+    {% else %}
+      --server https://{{ hostvars[groups['master'][0]]['ansible_host'] | default(groups['master'][0]) }}:6443
+    {% endif %}
+    --token {{ k3s_token }}
+  {% endif %}
+  {{ extra_server_args | default('') }}
+# The systemd directory to store the service file
+systemd_dir: /etc/systemd/system
+# interface which will be used for flannel
+flannel_iface: "bond100"
+public_dns: "1.1.1.1 8.8.8.8"
+# image tag for kube-vip
+kube_vip_tag_version: "v0.5.0"
+# image tag for metal lb
+metal_lb_speaker_tag_version: "v0.13.4"
+metal_lb_controller_tag_version: "v0.13.4"
+# metallb ip range for load balancer
+metal_lb_ip_range: "10.100.3.230-10.100.3.239"
