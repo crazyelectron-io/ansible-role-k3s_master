@@ -115,9 +115,6 @@
     enabled: yes
   when: k3s_service_installed.changed
   register: k3s_started
-- name: Show k3s service start result
-  debug:
-    msg: "{{ k3s_started }}"
 
 - name: Wait for node-token
   wait_for:
