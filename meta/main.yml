@@ -16,5 +16,5 @@ galaxy_info:
     - debian
 
 dependencies:
-- src: git+https://github.com/crazyelectron-io/role-k3s_prereq.git
+- src: git+https://github.com/crazyelectron-io/ansible-role-k3s_prereq.git
   name: k3s-prereq
